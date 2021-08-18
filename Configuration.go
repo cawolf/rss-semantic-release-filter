@@ -13,7 +13,7 @@ const (
 	Patch ComparisonLevelType = "patch"
 )
 
-func ReadConfiguration() Configuration {
+func ReadConfiguration(directory string) Configuration {
 	// TODO read configuration from file
 	configuration := Configuration{
 		feedUrl:         "dsajfdsalsf",

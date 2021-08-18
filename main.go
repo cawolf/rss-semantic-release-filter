@@ -9,7 +9,10 @@ import (
 
 func main() {
 	refresh := flag.NewFlagSet("refresh", flag.ExitOnError)
+	refreshDirectory := refresh.String("directory", ".", "directory containing configuration and database")
+
 	feed := flag.NewFlagSet("feed", flag.ExitOnError)
+	feedDirectory := feed.String("directory", ".", "directory containing configuration and database")
 
 	if len(os.Args) < 2 {
 		PrintUsage()
@@ -19,11 +22,11 @@ func main() {
 	case "refresh":
 		ParseArgs(refresh)
 
-		RefreshCommand()
+		RefreshCommand(*refreshDirectory + "/")
 	case "feed":
 		ParseArgs(feed)
 
-		FeedCommand()
+		FeedCommand(*feedDirectory + "/")
 	default:
 		PrintUsage()
 	}

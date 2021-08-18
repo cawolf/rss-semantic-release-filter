@@ -6,16 +6,16 @@ import (
 	"regexp"
 )
 
-func RefreshCommand() {
+func RefreshCommand(directory string) {
 	const SemanticVersioningRegexpPattern = "(?P<major>0|[1-9]\\d*)\\.(?P<minor>0|[1-9]\\d*)\\.(?P<patch>0|[1-9]\\d*)(?:-(?P<prerelease>(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?"
 
 	semanticVersioningRegexp, _ := regexp.Compile(SemanticVersioningRegexpPattern)
 
 	fp := gofeed.NewParser()
 
-	db := OpenDatabase()
+	db := OpenDatabase(directory)
 
-	configuration := ReadConfiguration()
+	configuration := ReadConfiguration(directory)
 
 	log.Println("refreshing all subscribed feeds") // TODO: show number of feeds
 

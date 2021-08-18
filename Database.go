@@ -7,8 +7,8 @@ import (
 	_ "modernc.org/sqlite"
 )
 
-func OpenDatabase() *sql.DB {
-	db, err := sql.Open("sqlite", "file:./foo.db") // FIXME
+func OpenDatabase(directory string) *sql.DB {
+	db, err := sql.Open("sqlite", "file:"+directory+"foo.db") // FIXME
 	if err != nil {
 		log.Fatal(err)
 	}

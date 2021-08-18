@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func FeedCommand() {
+func FeedCommand(directory string) {
 	// TODO
 
 	log.Println("feed")
