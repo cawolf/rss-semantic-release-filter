@@ -17,3 +17,4 @@
 
 /rss-semantic-release-filter
 /*.db
+/config.yaml

@@ -3,15 +3,12 @@ package main
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/mmcdole/gofeed"
-	"log"
-	"net/http"
 )
 
 func FeedCommand(directory string) {
 	// TODO
 
-	log.Println("feed")
+	logger.Info("feed")
 
 	e := echo.New()
 
@@ -23,8 +20,9 @@ func FeedCommand(directory string) {
 }
 
 func hello(c echo.Context) error {
-	fp := gofeed.NewParser()
+	/*fp := gofeed.NewParser()
 	feed := GetFeed(*fp)
 
-	return c.XML(http.StatusOK, feed.Items[0].Published+": "+feed.Items[0].Title+" "+feed.Items[0].Link+"\n"+feed.Items[0].Content)
+	return c.XML(http.StatusOK, feed.Items[0].Published+": "+feed.Items[0].Title+" "+feed.Items[0].Link+"\n"+feed.Items[0].Content)*/
+	return nil
 }

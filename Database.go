@@ -3,24 +3,23 @@ package main
 import (
 	"database/sql"
 	"github.com/mmcdole/gofeed"
-	"log"
 	_ "modernc.org/sqlite"
 )
 
 func OpenDatabase(directory string) *sql.DB {
-	db, err := sql.Open("sqlite", "file:"+directory+"foo.db") // FIXME
+	db, err := sql.Open("sqlite", "file:"+directory+"feeds.db")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	_, err = db.Exec("CREATE TABLE IF NOT EXISTS items (url TEXT PRIMARY KEY, title TEXT NOT NULL, content TEXT NOT NULL, published INTEGER NOT NULL)")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	_, err = db.Exec("CREATE INDEX IF NOT EXISTS idx_published ON items (published)")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	return db
@@ -34,13 +33,15 @@ func AddItemsToDatabase(db *sql.DB, matchedItems []*gofeed.Item) int64 {
 		a, _ := r.RowsAffected()
 		rowsAffected += a
 	}
-	log.Printf("added %d items to database", rowsAffected)
+	logger.Infow("added new items to database",
+		"addedItemCount", rowsAffected,
+	)
 	return rowsAffected
 }
 
 func CloseDatabase(db *sql.DB) {
 	err := db.Close()
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 }

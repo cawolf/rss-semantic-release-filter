@@ -3,11 +3,16 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
+	"go.uber.org/zap"
 	"os"
+	"strconv"
 )
 
+var logger *zap.SugaredLogger
+
 func main() {
+	CreateLogger()
+
 	refresh := flag.NewFlagSet("refresh", flag.ExitOnError)
 	refreshDirectory := refresh.String("directory", ".", "directory containing configuration and database")
 
@@ -32,11 +37,26 @@ func main() {
 	}
 }
 
-func ParseArgs(refresh *flag.FlagSet) {
-	err := refresh.Parse(os.Args[2:])
-	if err != nil {
-		log.Fatal(err)
+func CreateLogger() {
+	loggerEnv := os.Getenv("RSS_SEMANTIC_RELEASE_FILTER_LOGGER_STRUCTURED")
+	structuredLoggingEnabled := false
+	if loggerEnv != "" {
+		var err error
+		structuredLoggingEnabled, err = strconv.ParseBool(loggerEnv)
+		if err != nil {
+			structuredLoggingEnabled = false
+		}
 	}
+
+	var baseLogger *zap.Logger
+	if structuredLoggingEnabled {
+		baseLogger, _ = zap.NewProduction()
+	} else {
+		baseLogger, _ = zap.NewDevelopment()
+	}
+
+	defer baseLogger.Sync()
+	logger = baseLogger.Sugar()
 }
 
 func PrintUsage() {
@@ -45,4 +65,11 @@ func PrintUsage() {
 	fmt.Println("    refresh - refreshes all subscribed feeds and updates the internal filtered database")
 	fmt.Println("    feed - generates the filtered feed")
 	os.Exit(1)
+}
+
+func ParseArgs(refresh *flag.FlagSet) {
+	err := refresh.Parse(os.Args[2:])
+	if err != nil {
+		logger.Fatal(err)
+	}
 }

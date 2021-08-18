@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/mmcdole/gofeed"
-	"log"
 	"regexp"
 )
 
@@ -15,19 +14,40 @@ func RefreshCommand(directory string) {
 
 	db := OpenDatabase(directory)
 
-	configuration := ReadConfiguration(directory)
+	var configuration Configuration
+	configuration.Read(directory)
 
-	log.Println("refreshing all subscribed feeds") // TODO: show number of feeds
+	logger.Infow("refreshing subscribed feeds",
+		"feedCount", len(configuration.Feeds),
+	)
 
-	// TODO: loop
-	feed := GetFeed(*fp) // TODO use configuration: feedUrl
-	// TODO: handle nil feed
+	successfullyRefreshed := 0
+	filteredFeedItemCount := 0
+	addedFeedItemCount := *new(int64)
+	for _, feedConfiguration := range configuration.Feeds {
+		feed := GetFeed(*fp, feedConfiguration)
 
-	filteredFeedItems := FilterFeed(feed, semanticVersioningRegexp, configuration)
+		if feed == nil {
+			logger.Warnw("could not fetch feed, skipping",
+				"feedUrl", feedConfiguration.FeedUrl,
+			)
+			continue
+		}
 
-	addedItemCount := AddItemsToDatabase(db, filteredFeedItems)
+		filteredFeedItems := FilterFeed(feed, semanticVersioningRegexp, feedConfiguration)
 
-	CloseDatabase(db)
+		filteredFeedItemCount = filteredFeedItemCount + len(filteredFeedItems)
 
-	log.Printf("refreshed all subscribed feeds, found %d items matching the filters, added %d items to database\n", len(filteredFeedItems), addedItemCount) // TODO: show number of feeds
+		addedFeedItemCount = addedFeedItemCount + AddItemsToDatabase(db, filteredFeedItems)
+
+		CloseDatabase(db)
+
+		successfullyRefreshed++
+	}
+
+	logger.Infow("refreshed subscribed feeds",
+		"successfullyRefreshedFeeds", successfullyRefreshed,
+		"filteredFeedItemCount", filteredFeedItemCount,
+		"addedFeedItemCount", addedFeedItemCount,
+	)
 }
