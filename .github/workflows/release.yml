@@ -6,6 +6,9 @@ on:
       tag:
         description: 'Release Tag'
         required: true
+      cache_tag:
+        description: 'Cache Tag'
+        required: true
 
 jobs:
   build:
@@ -40,5 +43,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:${{ github.event.inputs.cache_tag }}
+          cache-to: type=inline
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.event.inputs.tag }}
