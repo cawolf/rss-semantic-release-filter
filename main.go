@@ -38,11 +38,11 @@ func main() {
 }
 
 func CreateLogger() {
-	loggerEnv := os.Getenv("RSS_SEMANTIC_RELEASE_FILTER_LOGGER_STRUCTURED")
+	structuredLoggingEnv := os.Getenv("RSS_SEMANTIC_RELEASE_FILTER_LOG_STRUCTURED")
 	structuredLoggingEnabled := false
-	if loggerEnv != "" {
+	if structuredLoggingEnv != "" {
 		var err error
-		structuredLoggingEnabled, err = strconv.ParseBool(loggerEnv)
+		structuredLoggingEnabled, err = strconv.ParseBool(structuredLoggingEnv)
 		if err != nil {
 			structuredLoggingEnabled = false
 		}

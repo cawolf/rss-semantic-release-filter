@@ -3,20 +3,21 @@ package main
 import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/mmcdole/gofeed"
-	"os"
 	"regexp"
 )
 
 func GetFeed(parser gofeed.Parser, feedConfiguration FeedConfiguration) *gofeed.Feed {
-	runes := []rune(feedConfiguration.FeedUrl)
-	file, _ := os.Open(string(runes[7:])) // TODO: refactor to fetching from http
-	defer file.Close()
+	feed, _ := parser.ParseURL(feedConfiguration.FeedUrl)
 
-	feed, _ := parser.Parse(file)
-
-	logger.Infow("refreshing feed",
-		"feedTitle", feed.Title,
-	)
+	if feed != nil {
+		logger.Infow("refreshing feed",
+			"feedTitle", feed.Title,
+		)
+	} else {
+		logger.Warnw("could not fetch feed, skipping",
+			"feedUrl", feedConfiguration.FeedUrl,
+		)
+	}
 	return feed
 }
 

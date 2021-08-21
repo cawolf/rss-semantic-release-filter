@@ -28,9 +28,6 @@ func RefreshCommand(directory string) {
 		feed := GetFeed(*fp, feedConfiguration)
 
 		if feed == nil {
-			logger.Warnw("could not fetch feed, skipping",
-				"feedUrl", feedConfiguration.FeedUrl,
-			)
 			continue
 		}
 
