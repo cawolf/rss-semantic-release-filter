@@ -8,7 +8,7 @@ on:
         required: true
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,6 +20,16 @@ jobs:
           git config --global user.email 'mail@cawolf.de'
           git tag ${{ github.event.inputs.tag }}
           git push origin ${{ github.event.inputs.tag }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=${{ github.event.inputs.tag }}
+            type=sha
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -42,5 +52,5 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          tags: |
-            ghcr.io/${{ github.repository }}:${{ github.event.inputs.tag }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
