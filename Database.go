@@ -39,6 +39,30 @@ func AddItemsToDatabase(db *sql.DB, matchedItems []*gofeed.Item) int64 {
 	return rowsAffected
 }
 
+func ReadItemsFromDatabase(db *sql.DB) []*gofeed.Item {
+	var items []*gofeed.Item
+	storedItems, _ := db.Query("SELECT url, title, content, published FROM items ORDER BY published DESC LIMIT 10")
+
+	var (
+		url       string
+		title     string
+		content   string
+		published string
+	)
+	for storedItems.Next() {
+		_ = storedItems.Scan(&url, &title, &content, &published)
+		items = append(items, &gofeed.Item{
+			Title:     title,
+			Content:   content,
+			Link:      url,
+			Published: published,
+		})
+	}
+
+	_ = storedItems.Close()
+	return items
+}
+
 func CloseDatabase(db *sql.DB) {
 	err := db.Close()
 	if err != nil {

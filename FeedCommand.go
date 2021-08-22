@@ -1,28 +1,45 @@
 package main
 
 import (
+	"database/sql"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"net/http"
 )
 
-func FeedCommand(directory string) {
-	// TODO
+type dbContext struct {
+	echo.Context
+	db *sql.DB
+}
 
-	logger.Info("feed")
+func FeedCommand(directory string) {
+	db := OpenDatabase(directory)
+	defer CloseDatabase(db)
 
 	e := echo.New()
 
 	e.Use(middleware.Recover())
 
-	e.GET("/", hello)
+	e.Use(func(h echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			cc := &dbContext{c, db}
+			return h(cc)
+		}
+	})
+
+	e.GET("/", ServeFeed)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
 
-func hello(c echo.Context) error {
-	/*fp := gofeed.NewParser()
-	feed := GetFeed(*fp)
+func ServeFeed(c echo.Context) error {
+	cc := c.(*dbContext)
 
-	return c.XML(http.StatusOK, feed.Items[0].Published+": "+feed.Items[0].Title+" "+feed.Items[0].Link+"\n"+feed.Items[0].Content)*/
-	return nil
+	items := ReadItemsFromDatabase(cc.db)
+
+	feed := GenerateFeed(items)
+
+	feedString, _ := feed.ToRss()
+
+	return c.Blob(http.StatusOK, echo.MIMEApplicationXMLCharsetUTF8, []byte(feedString))
 }

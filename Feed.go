@@ -2,8 +2,10 @@ package main
 
 import (
 	"github.com/Masterminds/semver/v3"
+	"github.com/gorilla/feeds"
 	"github.com/mmcdole/gofeed"
 	"regexp"
+	"time"
 )
 
 func GetFeed(parser gofeed.Parser, feedConfiguration FeedConfiguration) *gofeed.Feed {
@@ -55,4 +57,33 @@ func IsVersionMatchingTheFilter(versionString string, regexp *regexp.Regexp, lev
 	}
 
 	return true
+}
+
+func GenerateFeed(items []*gofeed.Item) *feeds.Feed {
+	now := time.Now()
+
+	feed := &feeds.Feed{
+		Title:       "filtered semantic releases",
+		Link:        &feeds.Link{Href: "https://github.com/cawolf/rss-semantic-release-filter"},
+		Description: "RSS feeds of projects filtered by semantic version levels",
+		Author:      &feeds.Author{Name: "Christian A. Wolf", Email: "mail@cawolf.de"},
+		Created:     now,
+	}
+
+	var feedItems []*feeds.Item
+
+	for _, item := range items {
+		itemTime, _ := time.Parse(time.RFC3339, item.Published)
+		feedItem := &feeds.Item{
+			Title:       item.Title,
+			Link:        &feeds.Link{Href: item.Link},
+			Description: item.Content,
+			Created:     itemTime,
+		}
+		feedItems = append(feedItems, feedItem)
+	}
+
+	feed.Items = feedItems
+
+	return feed
 }

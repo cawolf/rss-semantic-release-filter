@@ -55,8 +55,12 @@ func CreateLogger() {
 		baseLogger, _ = zap.NewDevelopment()
 	}
 
-	defer baseLogger.Sync()
+	defer SyncLogger(baseLogger)
 	logger = baseLogger.Sugar()
+}
+
+func SyncLogger(logger *zap.Logger) {
+	_ = logger.Sync()
 }
 
 func PrintUsage() {
