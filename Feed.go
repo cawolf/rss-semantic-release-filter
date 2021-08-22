@@ -7,7 +7,7 @@ import (
 )
 
 func GetFeed(parser gofeed.Parser, feedConfiguration FeedConfiguration) *gofeed.Feed {
-	feed, _ := parser.ParseURL(feedConfiguration.FeedUrl)
+	feed, _ := parser.ParseURL(feedConfiguration.Url)
 
 	if feed != nil {
 		logger.Infow("refreshing feed",
@@ -15,7 +15,7 @@ func GetFeed(parser gofeed.Parser, feedConfiguration FeedConfiguration) *gofeed.
 		)
 	} else {
 		logger.Warnw("could not fetch feed, skipping",
-			"feedUrl", feedConfiguration.FeedUrl,
+			"feedUrl", feedConfiguration.Url,
 		)
 	}
 	return feed
@@ -25,28 +25,34 @@ func FilterFeed(feed *gofeed.Feed, regexp *regexp.Regexp, feedConfiguration Feed
 	var filteredFeedItems []*gofeed.Item
 
 	for _, item := range feed.Items {
-		version, _ := semver.NewVersion(regexp.FindString(item.Title))
-
-		if feedConfiguration.ComparisonLevel == Major && (version.Minor() != 0 || version.Patch() != 0 || version.Prerelease() != "") {
-			continue
+		if IsVersionMatchingTheFilter(item.Title, regexp, feedConfiguration.MinimumLevel) {
+			filteredFeedItems = append(
+				filteredFeedItems,
+				item,
+			)
 		}
-
-		if feedConfiguration.ComparisonLevel == Minor && (version.Patch() != 0 || version.Prerelease() != "") {
-			continue
-		}
-
-		if feedConfiguration.ComparisonLevel == Patch && version.Prerelease() != "" {
-			continue
-		}
-
-		filteredFeedItems = append(
-			filteredFeedItems,
-			item,
-		)
 	}
 
 	logger.Infow("filtered matching feed items",
 		"filteredFeedItemCount", len(filteredFeedItems),
 	)
 	return filteredFeedItems
+}
+
+func IsVersionMatchingTheFilter(versionString string, regexp *regexp.Regexp, level MinimumLevelType) bool {
+	version, _ := semver.NewVersion(regexp.FindString(versionString))
+
+	if level == Major && (version.Minor() != 0 || version.Patch() != 0 || version.Prerelease() != "") {
+		return false
+	}
+
+	if level == Minor && (version.Patch() != 0 || version.Prerelease() != "") {
+		return false
+	}
+
+	if level == Patch && version.Prerelease() != "" {
+		return false
+	}
+
+	return true
 }

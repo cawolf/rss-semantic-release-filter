@@ -1,0 +1,29 @@
+name: "test"
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup go
+        uses: actions/setup-go@v1
+        with:
+          go-version: "1.17"
+
+      - name: Build
+        run: |
+          go mod download
+          go build
+
+      - name: Test
+        run: go test

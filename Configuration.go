@@ -11,16 +11,16 @@ type Configuration struct {
 }
 
 type FeedConfiguration struct {
-	FeedUrl         string              `yaml:"feed_url" validate:"required,url"`
-	ComparisonLevel ComparisonLevelType `yaml:"comparison_level" validate:"required,oneof=major minor patch"`
+	Url          string           `yaml:"url" validate:"required,url"`
+	MinimumLevel MinimumLevelType `yaml:"minimum_level" validate:"required,oneof=major minor patch"`
 }
 
-type ComparisonLevelType string
+type MinimumLevelType string
 
 const (
-	Major ComparisonLevelType = "major"
-	Minor ComparisonLevelType = "minor"
-	Patch ComparisonLevelType = "patch"
+	Major MinimumLevelType = "major"
+	Minor MinimumLevelType = "minor"
+	Patch MinimumLevelType = "patch"
 )
 
 func (configuration *Configuration) Read(directory string) *Configuration {
