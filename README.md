@@ -4,6 +4,11 @@
 
 This application filters RSS feeds from GitHub project releases by semantic version levels and publishes it as a new RSS feed for you to consume. This way, you can specify for each project, which releases you are interested in, instead of searching through all releases for relevant changes interesting to you.
 
+## installation
+
+You can either build a binary for your system from this source code or use a [docker image](https://github.com/cawolf/rss-semantic-release-filter/pkgs/container/rss-semantic-release-filter).
+An example `docker-compose.yml` is provided in the repository.
+
 ## usage
 
 ### create config.yaml
