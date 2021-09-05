@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  rss-semantic-release-filter:
+    image: ghcr.io/cawolf/rss-semantic-release-filter:latest
+    volumes:
+      - ./config.yaml:/config.yaml
+      - .:/data
+    ports:
+      - "1323:1323"
