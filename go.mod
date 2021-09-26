@@ -7,7 +7,7 @@ require (
 	github.com/go-playground/validator/v10 v10.9.0
 	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/gorilla/feeds v1.1.1
-	github.com/labstack/echo/v4 v4.6.0
+	github.com/labstack/echo/v4 v4.6.1
 	github.com/mmcdole/gofeed v1.1.3
 	github.com/stretchr/testify v1.7.0
 	go.uber.org/atomic v1.9.0 // indirect
