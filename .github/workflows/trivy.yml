@@ -12,11 +12,6 @@ on:
 jobs:
   trivy:
     runs-on: "ubuntu-18.04"
-    services:
-      registry:
-        image: registry:2
-        ports:
-          - 5000:5000
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -34,7 +29,7 @@ jobs:
         with:
           context: .
           platforms: linux/amd64
-          push: true
+          load: true
           tags: 'localhost:5000/${{ github.repository }}:${{ github.sha }}'
 
       - name: Run Trivy vulnerability scanner
