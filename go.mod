@@ -12,7 +12,7 @@ require (
 	github.com/stretchr/testify v1.7.0
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
-	go.uber.org/zap v1.19.1
+	go.uber.org/zap v1.20.0
 	golang.org/x/net v0.0.0-20210913180222-943fd674d43e // indirect
 	golang.org/x/tools v0.1.5 // indirect
 	gopkg.in/yaml.v2 v2.4.0
