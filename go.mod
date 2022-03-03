@@ -7,13 +7,13 @@ require (
 	github.com/go-playground/validator/v10 v10.10.0
 	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/gorilla/feeds v1.1.1
-	github.com/labstack/echo/v4 v4.6.3
+	github.com/labstack/echo/v4 v4.7.0
 	github.com/mmcdole/gofeed v1.1.3
 	github.com/stretchr/testify v1.7.0
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
 	go.uber.org/zap v1.21.0
-	golang.org/x/net v0.0.0-20210913180222-943fd674d43e // indirect
+	golang.org/x/net v0.0.0-20211015210444-4f30a5c0130f // indirect
 	golang.org/x/tools v0.1.5 // indirect
 	gopkg.in/yaml.v2 v2.4.0
 	modernc.org/sqlite v1.14.6
