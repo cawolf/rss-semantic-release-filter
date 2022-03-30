@@ -83,6 +83,7 @@ github.com/mattn/go-sqlite3 v1.14.8 h1:gDp86IdQsN/xWjIEmr9MF6o9mpksUgh0fu+9ByFxz
 github.com/mattn/go-sqlite3 v1.14.8/go.mod h1:NyWgC/yNuGj7Q9rpYnZvas74GogHl5/Z4A/KQRfk6bU=
 github.com/mattn/go-sqlite3 v1.14.9/go.mod h1:NyWgC/yNuGj7Q9rpYnZvas74GogHl5/Z4A/KQRfk6bU=
 github.com/mattn/go-sqlite3 v1.14.10/go.mod h1:NyWgC/yNuGj7Q9rpYnZvas74GogHl5/Z4A/KQRfk6bU=
+github.com/mattn/go-sqlite3 v1.14.12/go.mod h1:NyWgC/yNuGj7Q9rpYnZvas74GogHl5/Z4A/KQRfk6bU=
 github.com/mmcdole/gofeed v1.1.3 h1:pdrvMb18jMSLidGp8j0pLvc9IGziX4vbmvVqmLH6z8o=
 github.com/mmcdole/gofeed v1.1.3/go.mod h1:QQO3maftbOu+hiVOGOZDRLymqGQCos4zxbA4j89gMrE=
 github.com/mmcdole/goxpp v0.0.0-20181012175147-0068e33feabf h1:sWGE2v+hO0Nd4yFU/S/mDBM5plIU8v/Qhfz41hkDIAI=
@@ -325,6 +326,8 @@ modernc.org/ccgo/v3 v3.15.15/go.mod h1:z5qltXjU4PJl0pE5nhYQCvA9DhPHiWsl5GWl89+NS
 modernc.org/ccgo/v3 v3.15.16/go.mod h1:XbKRMeMWMdq712Tr5ECgATYMrzJ+g9zAZEj2ktzBe24=
 modernc.org/ccgo/v3 v3.15.17 h1:svaDk4rfh7XQPBwkqzjKK8bta/vK4VVL3JP6ZLbcr0w=
 modernc.org/ccgo/v3 v3.15.17/go.mod h1:bofnFkpRFf5gLY+mBZIyTW6FEcp26xi2lgOFk2Rlvs0=
+modernc.org/ccgo/v3 v3.15.18 h1:X5ym656Ye7/ubL+wox0SeF9aRX5od1UDFn1tAbQR+90=
+modernc.org/ccgo/v3 v3.15.18/go.mod h1:/2lv3WjHyanEr2sAPdGKRC38n6f0werut9BRXUjjX+A=
 modernc.org/ccorpus v1.11.1/go.mod h1:2gEUTrWqdpH2pXsmTM1ZkjeSrUWDpjMu2T6m29L/ErQ=
 modernc.org/ccorpus v1.11.4/go.mod h1:2gEUTrWqdpH2pXsmTM1ZkjeSrUWDpjMu2T6m29L/ErQ=
 modernc.org/ccorpus v1.11.6/go.mod h1:2gEUTrWqdpH2pXsmTM1ZkjeSrUWDpjMu2T6m29L/ErQ=
@@ -430,6 +433,8 @@ modernc.org/sqlite v1.14.8 h1:2OOqfZAyU4x4qusilvHoRXXqsAgaZobi1o+mjQ5MUpw=
 modernc.org/sqlite v1.14.8/go.mod h1:TFmXjym+/jR31fxc2B5eHnKMuJJGY7i1L/T5A0jzVww=
 modernc.org/sqlite v1.15.3 h1:3C4AWicF7S5vUUFJuBi7Ws8eWlPjqyo/c4Z1UGYBbyg=
 modernc.org/sqlite v1.15.3/go.mod h1:J7GAPbk8Txp0DJnT8TGwpUqJW0Z1cK2YpzjoXaZRU8k=
+modernc.org/sqlite v1.15.4 h1:pr3EA3Rety3j1c/9pCyGAe5d3vjF6wQwusHdgGCjIqc=
+modernc.org/sqlite v1.15.4/go.mod h1:Jwe13ItpESZ+78K5WS6+AjXsUg+JvirsjN3iIDO4C8k=
 modernc.org/strutil v1.1.1 h1:xv+J1BXY3Opl2ALrBwyfEikFAj8pmqcpnfmuwUwcozs=
 modernc.org/strutil v1.1.1/go.mod h1:DE+MQQ/hjKBZS2zNInV5hhcipt5rLPWkmpbGeW5mmdw=
 modernc.org/tcl v1.5.5 h1:N03RwthgTR/l/eQvz3UjfYnvVVj1G2sZqzFGfoD4HE4=
