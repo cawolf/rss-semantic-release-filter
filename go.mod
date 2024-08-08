@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/semver/v3 v3.2.0
 	github.com/go-playground/validator/v10 v10.11.1
 	github.com/google/go-cmp v0.5.9 // indirect
-	github.com/gorilla/feeds v1.1.1
+	github.com/gorilla/feeds v1.2.0
 	github.com/labstack/echo/v4 v4.10.2
 	github.com/mmcdole/gofeed v1.2.0
 	github.com/stretchr/testify v1.8.1
