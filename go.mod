@@ -1,9 +1,9 @@
 module rss-semantic-release-filter
 
-go 1.19
+go 1.21
 
 require (
-	github.com/Masterminds/semver/v3 v3.2.0
+	github.com/Masterminds/semver/v3 v3.4.0
 	github.com/go-playground/validator/v10 v10.11.1
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/gorilla/feeds v1.1.1
